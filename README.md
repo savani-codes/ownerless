@@ -11,7 +11,7 @@ command through Switch's permission prompts.
 Built for the [Flip the Switch Hackathon 2026](https://www.wemakedevs.org/hackathons/switch),
 Best Business Workflow track.
 
-> Demo video: *coming with the submission*
+> Website: [savani-codes.github.io/ownerless](https://savani-codes.github.io/ownerless/) · Demo video: *coming with the submission*
 
 ## The problem
 
@@ -114,6 +114,7 @@ scenario/    how the demo incident is staged and reset
 scripts/     setup, start, stop, memory sync and preflight (bash)
 deploy/      example config files
 docs/        architecture and the demo script
+website/     the showcase page (static HTML and CSS, deployed to GitHub Pages)
 vendor/      cognee-data-lab (git submodule): the demo Airflow, warehouse and Cognee lab
 ```
 
