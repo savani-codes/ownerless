@@ -1,0 +1,26 @@
+# Local config holds tokens: never commit it
+ownerless.toml
+.env
+
+# Switch Console writes agent credentials here
+.switch/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Recordings and scratch
+recordings/
+*.log

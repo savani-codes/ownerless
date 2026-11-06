@@ -1,0 +1,35 @@
+Ownerless
+Copyright 2026 Jishan Ahmed Shaikh and Savani
+
+This project is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It builds on the following work, which keeps its own license and notices:
+
+- cognee-data-lab (https://github.com/jars-demo/cognee-data-lab)
+  Apache License 2.0. Included unmodified as the git submodule
+  vendor/cognee-data-lab: the Airflow and DataHub connectors for cognee, the
+  demo Airflow DAGs, the Postgres warehouse, the DataHub seed and the lab's
+  /api/ask endpoint. Its third-party logo notices are in its own NOTICE file.
+
+- datahub-ai-rca (https://github.com/jars-demo/datahub-ai-rca)
+  Apache License 2.0. The investigation report format (Summary, Evidence,
+  Root cause chain, Owners, Recommended fix), the rule that agent tools are
+  read-only and return links, and the DataHub GraphQL query shapes in
+  tools/ownerless/datahub.py are adapted from it.
+
+- Switch (https://github.com/sandbox-quantum/switch)
+  Apache License 2.0 with the Commons Clause License Condition v1.0.
+  Ownerless uses Switch Console and the Switch server as installed software
+  and follows the format of its example templates. No Switch source code is
+  included in this repository.
+
+  "Commons Clause" License Condition v1.0: the Software is provided to you by
+  the Licensor under the License, as defined below, subject to the following
+  condition. Without limiting other conditions in the License, the grant of
+  rights under the License will not include, and the License does not grant
+  to you, the right to Sell the Software. See the Switch LICENSE file for the
+  full text.
+
+- DataHub (https://github.com/datahub-project/datahub), Apache License 2.0,
+  and Apache Airflow (https://airflow.apache.org), Apache License 2.0, are
+  used as installed services.

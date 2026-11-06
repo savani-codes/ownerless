@@ -1,0 +1,3 @@
+[submodule "vendor/cognee-data-lab"]
+	path = vendor/cognee-data-lab
+	url = https://github.com/jars-demo/cognee-data-lab.git
