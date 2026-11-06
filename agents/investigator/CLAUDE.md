@@ -32,7 +32,9 @@ Datasets can be written as `raw.products`, `retail_demo.raw.products` or a full 
 5. Prove the data problem with one or two warehouse SELECTs (for example, orders whose
    `product_id` is missing from `raw.products`, and how many products exist now). Make the
    numbers match the error in the log.
-6. `datahub entity` for each dataset the failed task reads. Look hard at `governance_gaps`.
+6. `datahub entity` for each dataset the failed task reads, **and for every dataset your queries
+   implicate** (for example, the table the orphaned rows point at, even when Airflow lists it
+   only for a later task). Look hard at `governance_gaps`.
 7. `datahub lineage <the dataset at fault> --direction downstream`: who is affected.
 8. Optionally, one `memory ask` that needs both systems, such as which Airflow tasks read the
    dataset at fault and who owns what depends on it. If it errors or is slow, say so and move on.
