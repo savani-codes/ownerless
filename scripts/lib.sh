@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Shared by the scripts in this folder. Source it; don't run it.
 # Works in Git Bash on Windows, and in bash on macOS and Linux.
 set -euo pipefail
