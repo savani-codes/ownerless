@@ -13,7 +13,8 @@ ok "stack/ at $(git -C "$STACK" rev-parse --short HEAD)"
 
 say "The ownerless CLI"
 # Editable, so the agents always run the code in this checkout.
-uv tool install --force --editable "$ROOT/tools" >/dev/null
+# Pinned: uv tool ignores tools/.python-version, and psycopg has no wheels for free-threaded 3.14.
+uv tool install --force --python 3.12 --editable "$ROOT/tools" >/dev/null
 uv tool update-shell >/dev/null 2>&1 || true
 if command -v ownerless >/dev/null; then
   ok "$(command -v ownerless)"
