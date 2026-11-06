@@ -10,7 +10,7 @@ import sys
 from collections.abc import Callable
 from typing import Any
 
-from . import OwnerlessError, __version__, airflow, datahub, memory, warehouse
+from . import OwnerlessError, __version__, airflow, datahub, memory, scenario, warehouse
 from .config import Config, load_config
 
 Handler = Callable[[Config, argparse.Namespace], Any]
@@ -132,12 +132,42 @@ def build_parser() -> argparse.ArgumentParser:
         ("datahub", "DataHub datasets, owners and lineage"),
         ("warehouse", "The Postgres warehouse"),
         ("memory", "Cognee memory through cognee-data-lab"),
+        ("scenario", "Set up and reset the demo incident (for people, never for agents)"),
     ):
         group = top.add_parser(name, help=help_text, description=help_text)
         groups[name] = group.add_subparsers(dest="command", required=True)
     _read_commands(groups)
     _write_commands(groups)
+    _scenario_commands(groups["scenario"])
     return parser
+
+
+def _scenario_commands(sc) -> None:
+    _add(
+        sc,
+        "reset",
+        "Restore products and the foreign key, and remove raw.products' owner in DataHub",
+        lambda c, a: scenario.reset_platform(c),
+    )
+    _add(
+        sc,
+        "break",
+        "Snapshot raw.products, drop the foreign key and delete three products orders still use",
+        lambda c, a: scenario.break_platform(c),
+    )
+    p = _add(
+        sc,
+        "trigger",
+        "Run the pipeline as the nightly schedule would, and wait for it to fail",
+        lambda c, a: scenario.trigger_nightly(c, not a.no_wait),
+    )
+    p.add_argument("--no-wait", action="store_true")
+    _add(
+        sc,
+        "status",
+        "Where the demo stands: products, orphans, owner, latest run",
+        lambda c, a: scenario.status(c),
+    )
 
 
 def _write_commands(groups: dict[str, Any]) -> None:
