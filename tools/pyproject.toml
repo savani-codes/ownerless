@@ -1,0 +1,39 @@
+[project]
+name = "ownerless"
+version = "0.1.0"
+description = "The tools the Ownerless Switch agents use to read and change Airflow, DataHub, Postgres and Cognee"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "psycopg[binary]>=3.1",
+]
+
+[project.scripts]
+ownerless = "ownerless.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ownerless"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+# GraphQL queries are full of braces, so they are filled with % rather than str.format.
+ignore = ["UP031"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
