@@ -135,7 +135,7 @@ export const knowledge: Entry[] = [
     question: "What does Cognee do here?",
     keywords: ["cognee", "memory", "remember", "graph", "knowledge", "ask", "llm"],
     answer: [
-      "Cognee holds a joined memory of Airflow and DataHub, built by our earlier project cognee-data-lab. The investigator can ask it questions that need both systems, like which tasks read a table and who owns what depends on it. It's optional: if it is slow, the investigator moves on.",
+      "Cognee holds a joined memory of Airflow and DataHub, from the data stack we built earlier. The investigator can ask it questions that need both systems, like which tasks read a table and who owns what depends on it. It's optional: if it is slow, the investigator moves on.",
     ],
     next: ["stack"],
   },
@@ -184,7 +184,7 @@ export const knowledge: Entry[] = [
     question: "What did you reuse, and what is new?",
     keywords: ["reuse", "reused", "new", "prior", "previous", "earlier", "original", "from", "scratch"],
     answer: [
-      "Reused, unchanged: cognee-data-lab (demo Airflow, warehouse, DataHub seed, Cognee memory) as a pinned submodule, plus the report shape and DataHub query shapes from datahub-ai-rca. Both are our earlier projects.",
+      "Reused, unchanged: our earlier data stack (demo Airflow, warehouse, DataHub seed, Cognee memory) as a pinned submodule, plus the report shape and DataHub query shapes from datahub-ai-rca. Both are our earlier projects.",
       "New for the hackathon: the Switch template and room design, both agents' roles and permissions, the ownerless CLI with its gated writes, the staged incident, the scripts and the two-key workflow.",
     ],
     next: ["team"],

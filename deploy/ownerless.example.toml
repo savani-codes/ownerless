@@ -1,9 +1,9 @@
 # Copy to ownerless.toml at the repository root (it is gitignored) and fill in the DataHub token.
-# The defaults match cognee-data-lab's demo profile and `datahub docker quickstart`.
+# The defaults match the data stack in stack/ and `datahub docker quickstart`.
 # Switch agents can't read your shell's environment, so everything they need lives here.
 
 [airflow]
-url = "http://localhost:8088"        # the demo Airflow 3.3 (cognee-data-lab --profile demo)
+url = "http://localhost:8088"        # the demo Airflow 3.3 (scripts/up.sh)
 username = "admin"
 password = "admin"
 dag_id = "retail_analytics_pipeline"
@@ -18,11 +18,11 @@ database = "retail_demo"              # so `raw.products` means retail_demo.raw.
 
 [warehouse]
 host = "localhost"
-port = 5433                           # the demo Postgres, published by cognee-data-lab
+port = 5433                           # the demo Postgres, published by the data stack
 dbname = "retail_demo"
 user = "airflow"
 password = "airflow"
 
 [memory]
-url = "http://localhost:8765"         # cognee-data-lab, after syncing both connectors
+url = "http://localhost:8765"         # the Cognee service, after scripts/memory-sync.sh
 timeout_seconds = 240

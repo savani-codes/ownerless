@@ -34,7 +34,7 @@ sequenceDiagram
 | Chat | Discord, bridged by Switch | `switch/ownerless.template.yaml` |
 | Agents | Two Claude Code sessions run by Switch Console | `agents/investigator/`, `agents/operator/` |
 | Tool | `ownerless`, a Python CLI that prints JSON with links | `tools/ownerless/` |
-| Platform | Airflow 3.3, Postgres, Cognee lab (Docker), DataHub (quickstart) | `stack/`, `scripts/` |
+| Platform | Airflow 3.3, Postgres, Cognee (Docker), DataHub (quickstart) | `stack/`, `scripts/` |
 
 ## Why a CLI and not MCP servers
 
@@ -60,7 +60,7 @@ change happens without a person agreeing to it and a person allowing it.
 
 Switch passes agents only a fixed set of environment variables, so nothing comes from your shell.
 The CLI finds `ownerless.toml` by walking up from the agent's working directory to the repository
-root. The scripts read the DataHub token from the same file, so the agents, the lab and the seed
+root. The scripts read the DataHub token from the same file, so the agents, Cognee and the seed
 share one copy. Both `ownerless.toml` and `.env` are gitignored.
 
 ## The staged incident

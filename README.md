@@ -85,7 +85,7 @@ git clone --recurse-submodules https://github.com/savani-codes/ownerless.git
 cd ownerless
 datahub docker quickstart       # DataHub at :8080 (API) and :9002 (UI)
 scripts/setup.sh                # ownerless CLI on PATH, ownerless.toml, DataHub token
-scripts/up.sh --seed            # Airflow :8088, Postgres :5433, cognee-data-lab :8765, seeded
+scripts/up.sh --seed            # Airflow :8088, Postgres :5433, Cognee :8765, seeded
 scripts/memory-sync.sh          # optional: Cognee memory (add an LLM key to .env first)
 scripts/preflight.sh            # every check should say ok
 ```
@@ -117,7 +117,7 @@ scripts/     setup, start, stop, memory sync and preflight (bash)
 deploy/      example config files
 docs/        architecture and the demo script
 website/     the showcase site (Vite, React, TypeScript), deployed to GitHub Pages
-stack/       the demo data stack (git submodule of cognee-data-lab): Airflow, warehouse, Cognee lab
+stack/       the demo data stack (git submodule): Airflow, warehouse, DataHub seed, Cognee
 ```
 
 Tests: `cd tools && uv run pytest` and `cd website && npm test`. CI also checks that no write
@@ -127,7 +127,7 @@ command is ever allowlisted, shellchecks the scripts and builds the website.
 
 | Reused | From |
 | --- | --- |
-| Demo Airflow 3.3, the retail warehouse, the DataHub seed, Cognee memory and `/api/ask` | [cognee-data-lab](https://github.com/jars-demo/cognee-data-lab), our earlier project, as a pinned submodule and unchanged |
+| Demo Airflow 3.3, the retail warehouse, the DataHub seed, Cognee memory and `/api/ask` | The data stack in `stack/`, our earlier work, as a pinned submodule and unchanged |
 | The report shape (summary, evidence, root cause chain, owners, fix) and DataHub GraphQL query shapes | [datahub-ai-rca](https://github.com/jars-demo/datahub-ai-rca), our earlier project |
 
 New for this hackathon: the Switch template and room design, both agents' roles and permission

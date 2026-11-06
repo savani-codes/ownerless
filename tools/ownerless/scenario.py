@@ -1,7 +1,7 @@
 """The demo incident: break it, run "last night's" pipeline, and reset everything for the next take.
 
 The story: an upstream cleanup deletes three discontinued products from raw.products. That table
-has no owner in DataHub (cognee-data-lab seeds it that way on purpose), so nobody is asked or
+has no owner in DataHub (the data stack seeds it that way on purpose), so nobody is asked or
 warned. Orders still point at the deleted products, so the nightly retail_analytics_pipeline
 fails at validate_orders and analytics.daily_revenue is not refreshed.
 
@@ -18,7 +18,7 @@ from .config import Config
 
 PRODUCTS = "raw.products"
 DATA_PLATFORM = "retail_demo_data_platform"
-FAIL_FLAG = "retail_fail_validation"  # cognee-data-lab's artificial failure; always off here
+FAIL_FLAG = "retail_fail_validation"  # the stack's artificial failure; always off here
 DELETED_COUNT = 3
 
 _FK_QUERY = """

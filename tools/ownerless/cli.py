@@ -131,7 +131,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("airflow", "Airflow runs, DAGs and task logs"),
         ("datahub", "DataHub datasets, owners and lineage"),
         ("warehouse", "The Postgres warehouse"),
-        ("memory", "Cognee memory through cognee-data-lab"),
+        ("memory", "Cognee memory of Airflow and DataHub"),
         ("scenario", "Set up and reset the demo incident (for people, never for agents)"),
     ):
         group = top.add_parser(name, help=help_text, description=help_text)

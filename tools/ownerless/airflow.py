@@ -1,6 +1,6 @@
 """Airflow 3 REST API (/api/v2): failed runs, DAG structure, task logs and run status.
 
-Authentication follows cognee-data-lab's Airflow connector: exchange the username and password
+Authentication follows our Airflow connector in stack/: exchange the username and password
 for a JWT at /auth/token, and log in again once when the token expires.
 """
 

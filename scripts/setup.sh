@@ -7,7 +7,7 @@ need git "Install Git for Windows: https://git-scm.com/download/win"
 need uv "Install uv: https://docs.astral.sh/uv/getting-started/installation/"
 need docker "Install Docker Desktop and start it."
 
-say "The data stack (stack/, from cognee-data-lab)"
+say "The data stack (stack/)"
 git -C "$ROOT" submodule update --init --recursive
 ok "stack/ at $(git -C "$STACK" rev-parse --short HEAD)"
 

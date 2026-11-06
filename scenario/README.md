@@ -6,7 +6,7 @@ for the people running the demo. Both agents are denied them in their permission
 
 | Step | Command | What happens |
 | --- | --- | --- |
-| 1 | `ownerless scenario reset` | Products restored, foreign key back on, `raw.products` has no owner in DataHub, the lab's artificial failure flag off |
+| 1 | `ownerless scenario reset` | Products restored, foreign key back on, `raw.products` has no owner in DataHub, the stack's artificial failure flag off |
 | 2 | `ownerless scenario break` | Snapshot `raw.products` to `backup.products`, drop the foreign key, delete the 3 highest product ids that orders still use |
 | 3 | `ownerless scenario trigger` | Run `retail_analytics_pipeline` as the 02:00 schedule would; it fails at `validate_orders` with "N invalid order rows" |
 | 4 | *(the demo)* | In Discord: `@investigator daily_revenue didn't refresh, what happened?` |

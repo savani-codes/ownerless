@@ -32,7 +32,7 @@ params:
   location:
     type: location
     description: >-
-      Where both agents run. It must reach Airflow, DataHub, Postgres and cognee-data-lab on
+      Where both agents run. It must reach Airflow, DataHub, Postgres and Cognee on
       localhost, so keep it on the machine that runs the data stack.
     default: local
     input: advanced

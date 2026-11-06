@@ -13,7 +13,7 @@ bad() { printf '  FAIL  %s\n' "$*"; }
 die() { printf 'error: %s\n' "$*" >&2; exit 1; }
 need() { command -v "$1" >/dev/null 2>&1 || die "$1 is not installed. $2"; }
 
-# Optional lab settings (an LLM key for Cognee) come from .env; Compose reads them from the
+# Optional stack settings (an LLM key for Cognee) come from .env; Compose reads them from the
 # environment. The DataHub token comes from ownerless.toml, so it lives in one place.
 load_env() {
   if [[ -f "$ROOT/.env" ]]; then

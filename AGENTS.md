@@ -18,7 +18,7 @@ deploy/        local configuration; nothing is deployed to the cloud
 scripts/       setup, start/stop the data stack, preflight checks (run from Git Bash on Windows)
 docs/          architecture, demo script, logo assets
 website/       the showcase site: Vite + React + TypeScript, deployed to GitHub Pages
-stack/         the demo data stack: cognee-data-lab as a pinned, unmodified git submodule
+stack/         the demo data stack (Airflow, Postgres, DataHub seed, Cognee), a pinned git submodule
 ```
 
 ## Rules

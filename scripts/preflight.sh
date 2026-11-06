@@ -26,7 +26,7 @@ say "Services, through the same CLI the agents use"
 check "Airflow: the pipeline DAG and its datasets" ownerless airflow dag
 check "DataHub: raw.products is cataloged" ownerless datahub entity raw.products
 check "Postgres: the warehouse answers" ownerless warehouse query "SELECT count(*) FROM raw.products"
-check "Cognee lab is up (memory ask is optional)" http_ok http://localhost:8765/api/state
+check "Cognee is up (memory ask is optional)" http_ok http://localhost:8765/api/state
 
 say "Scenario"
 ownerless scenario status || failed=1

@@ -5,11 +5,11 @@ This project is licensed under the Apache License, Version 2.0 (see LICENSE).
 
 It builds on the following work, which keeps its own license and notices:
 
-- cognee-data-lab (https://github.com/jars-demo/cognee-data-lab)
-  Apache License 2.0. Included unmodified as the git submodule
-  stack/: the Airflow and DataHub connectors for cognee, the
-  demo Airflow DAGs, the Postgres warehouse, the DataHub seed and the lab's
-  /api/ask endpoint. Its third-party logo notices are in its own NOTICE file.
+- The data stack in stack/ (our earlier work), Apache License 2.0.
+  Included unmodified as a git submodule, with its own LICENSE and NOTICE:
+  the Airflow and DataHub connectors for Cognee, the demo Airflow DAGs, the
+  Postgres warehouse, the DataHub seed and the Cognee service's /api/ask
+  endpoint.
 
 - datahub-ai-rca (https://github.com/jars-demo/datahub-ai-rca)
   Apache License 2.0. The investigation report format (Summary, Evidence,
