@@ -40,13 +40,16 @@ class AirflowClient:
         if not self._token:
             raise OwnerlessError("Airflow /auth/token returned no access_token")
 
-    def request(self, method: str, path: str, **kwargs) -> Any:
+    def request(self, method: str, path: str, allow: tuple[int, ...] = (), **kwargs) -> Any:
+        """Call the API; a status in `allow` returns None instead of raising."""
         if not self._token:
             self._login()
         response = self._send(method, path, **kwargs)
         if response.status_code == 401:
             self._login()
             response = self._send(method, path, **kwargs)
+        if response.status_code in allow:
+            return None
         self._check(response, path)
         return response.json() if response.content else {}
 
@@ -225,3 +228,64 @@ def task_log(
         "error_lines": errors[-10:],
         "tail": lines[-tail:],
     }
+
+
+# -- Writes (the operator's; each one raises a Switch permission prompt) ----------------------------
+
+FINISHED = {"success", "failed"}
+
+
+def wait_for_run(client: AirflowClient, dag_id: str, run_id: str, timeout: int = 300, poll: int = 3) -> dict:
+    deadline = time.monotonic() + timeout
+    while True:
+        run = client.get(f"/api/v2/dags/{quote(dag_id)}/dagRuns/{quote(run_id, safe='')}")
+        if run.get("state") in FINISHED:
+            return _run_view(client, run)
+        if time.monotonic() > deadline:
+            raise OwnerlessError(f"{dag_id} run {run_id} is still {run.get('state')} after {timeout}s")
+        time.sleep(poll)
+
+
+def rerun_failed(client: AirflowClient, dag_id: str, run_id: str | None = None, wait: bool = True) -> dict:
+    """Clear the failed (and upstream-failed) tasks of a run so Airflow runs them again."""
+    if run_id is None:
+        failed = failed_runs(client, dag_id, limit=1)["failed_runs"]
+        if not failed:
+            raise OwnerlessError(f"{dag_id} has no failed run to rerun")
+        run_id = failed[0]["run_id"]
+    client.request(
+        "POST",
+        f"/api/v2/dags/{quote(dag_id)}/clearTaskInstances",
+        json={
+            "dry_run": False,
+            "dag_run_id": run_id,
+            "only_failed": True,
+            "include_downstream": True,
+            "reset_dag_runs": True,
+        },
+    )
+    if not wait:
+        return run_status(client, dag_id, run_id)
+    time.sleep(2)  # let the scheduler pick the cleared run up before polling
+    return wait_for_run(client, dag_id, run_id)
+
+
+def trigger(client: AirflowClient, dag_id: str, run_id: str) -> dict:
+    run = client.request(
+        "POST", f"/api/v2/dags/{quote(dag_id)}/dagRuns", json={"dag_run_id": run_id, "logical_date": None}
+    )
+    return {
+        "dag_id": dag_id,
+        "run_id": run["dag_run_id"],
+        "url": run_url(client.cfg, dag_id, run["dag_run_id"]),
+    }
+
+
+def unpause(client: AirflowClient, dag_id: str) -> None:
+    client.request("PATCH", f"/api/v2/dags/{quote(dag_id)}", json={"is_paused": False})
+
+
+def set_variable(client: AirflowClient, key: str, value: str) -> None:
+    body = {"key": key, "value": value}
+    if client.request("PATCH", f"/api/v2/variables/{quote(key)}", allow=(404,), json=body) is None:
+        client.request("POST", "/api/v2/variables", json=body)

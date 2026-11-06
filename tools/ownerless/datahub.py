@@ -171,3 +171,78 @@ def search(client: DataHubClient, query: str, count: int = 10) -> dict[str, Any]
         "total": results["total"],
         "entities": [summarize(client.cfg, r["entity"]) for r in results["searchResults"]],
     }
+
+
+# -- Writes (the operator's; each one raises a Switch permission prompt) ----------------------------
+
+TECHNICAL_OWNER = "urn:li:ownershipType:__system__technical_owner"
+
+_ADD_OWNER = "mutation addOwner($input: AddOwnerInput!) { addOwner(input: $input) }"
+_REMOVE_OWNER = "mutation removeOwner($input: RemoveOwnerInput!) { removeOwner(input: $input) }"
+_CREATE_TOKEN = """
+mutation createToken($input: CreateAccessTokenInput!) { createAccessToken(input: $input) { accessToken } }
+"""
+
+
+def group_urn(group: str) -> str:
+    """Accept a URN or a group id such as retail_demo_data_platform."""
+    return group if group.startswith("urn:li:corpGroup:") else f"urn:li:corpGroup:{group}"
+
+
+def set_owner(client: DataHubClient, name: str, group: str) -> dict[str, Any]:
+    """Make a group the technical owner of a dataset, then read the dataset back as proof."""
+    urn = dataset_urn(client.cfg, name)
+    client.graphql(
+        _ADD_OWNER,
+        {
+            "input": {
+                "ownerUrn": group_urn(group),
+                "resourceUrn": urn,
+                "ownerEntityType": "CORP_GROUP",
+                "ownershipTypeUrn": TECHNICAL_OWNER,
+            }
+        },
+    )
+    return {"changed": "owner added", "dataset": entity(client, urn)}
+
+
+def remove_owner(client: DataHubClient, name: str, group: str) -> dict[str, Any]:
+    urn = dataset_urn(client.cfg, name)
+    client.graphql(
+        _REMOVE_OWNER,
+        {"input": {"ownerUrn": group_urn(group), "resourceUrn": urn, "ownershipTypeUrn": TECHNICAL_OWNER}},
+    )
+    return {"changed": "owner removed", "dataset": entity(client, urn)}
+
+
+def create_token(cfg: DataHubConfig, username: str = "datahub", password: str = "datahub") -> str:
+    """Log in to the DataHub UI and mint a personal access token (setup only, not for agents)."""
+    base = cfg.ui_url.rstrip("/")
+    session = requests.Session()
+    try:
+        login = session.post(f"{base}/logIn", json={"username": username, "password": password}, timeout=30)
+    except requests.RequestException as exc:
+        raise OwnerlessError(f"The DataHub UI is unreachable at {base}: {exc}") from None
+    if login.status_code != 200:
+        raise OwnerlessError(f"DataHub login failed with HTTP {login.status_code}")
+    response = session.post(
+        f"{base}/api/v2/graphql",
+        json={
+            "query": _CREATE_TOKEN,
+            "variables": {
+                "input": {
+                    "type": "PERSONAL",
+                    "actorUrn": f"urn:li:corpuser:{username}",
+                    "duration": "THREE_MONTHS",
+                    "name": "ownerless",
+                    "description": "Created by `ownerless datahub token`",
+                }
+            },
+        },
+        timeout=30,
+    )
+    body = response.json() if response.content else {}
+    if response.status_code != 200 or body.get("errors"):
+        detail = (body.get("errors") or [{}])[0].get("message", response.status_code)
+        raise OwnerlessError(f"Could not create a DataHub token: {detail}")
+    return body["data"]["createAccessToken"]["accessToken"]

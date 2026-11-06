@@ -136,7 +136,46 @@ def build_parser() -> argparse.ArgumentParser:
         group = top.add_parser(name, help=help_text, description=help_text)
         groups[name] = group.add_subparsers(dest="command", required=True)
     _read_commands(groups)
+    _write_commands(groups)
     return parser
+
+
+def _write_commands(groups: dict[str, Any]) -> None:
+    """Changes. None of these is in either agent's allowlist, so each one asks a person first."""
+    p = _add(
+        groups["airflow"],
+        "rerun",
+        "WRITE: clear a run's failed tasks so Airflow runs them again, then wait for the result",
+        lambda c, a: airflow.rerun_failed(_airflow(c), a.dag or c.airflow.dag_id, a.run, not a.no_wait),
+    )
+    p.add_argument("--run", help="DAG run id (default: the latest failed run)")
+    p.add_argument("--dag", help="Default: [airflow] dag_id")
+    p.add_argument("--no-wait", action="store_true")
+
+    p = _add(
+        groups["datahub"],
+        "set-owner",
+        "WRITE: make a group the technical owner of a dataset",
+        lambda c, a: datahub.set_owner(_datahub(c), a.dataset, a.group),
+    )
+    p.add_argument("dataset")
+    p.add_argument("--group", required=True, help="Group URN or id, e.g. retail_demo_data_platform")
+
+    p = _add(
+        groups["datahub"],
+        "token",
+        "SETUP: create a DataHub access token by logging in to the UI (not for agents)",
+        lambda c, a: {"token": datahub.create_token(c.datahub, a.username, a.password)},
+    )
+    p.add_argument("--username", default="datahub")
+    p.add_argument("--password", default="datahub")
+
+    _add(
+        groups["warehouse"],
+        "restore-products",
+        "WRITE: restore products missing from raw.products out of the backup.products snapshot",
+        lambda c, a: warehouse.restore_products(c.warehouse),
+    )
 
 
 def main(argv: list[str] | None = None) -> int:

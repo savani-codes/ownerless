@@ -72,3 +72,36 @@ def query(cfg: WarehouseConfig, sql: str) -> dict:
         "row_count": min(len(rows), MAX_ROWS),
         "truncated": len(rows) > MAX_ROWS,
     }
+
+
+# -- Writes (the operator's; each one raises a Switch permission prompt) ----------------------------
+
+BACKUP_TABLE = "backup.products"
+
+
+def backup_exists(cur: psycopg.Cursor) -> bool:
+    cur.execute("SELECT to_regclass(%s) IS NOT NULL", (BACKUP_TABLE,))
+    return bool(cur.fetchone()[0])
+
+
+def restore_products(cfg: WarehouseConfig) -> dict:
+    """Put back every product that is in the snapshot but missing from raw.products."""
+    with connect(cfg, read_only=False) as conn, conn.cursor() as cur:
+        if not backup_exists(cur):
+            raise OwnerlessError(f"No snapshot table {BACKUP_TABLE}; nothing to restore from")
+        cur.execute(
+            f"INSERT INTO raw.products SELECT b.* FROM {BACKUP_TABLE} b "
+            "WHERE NOT EXISTS (SELECT 1 FROM raw.products p WHERE p.product_id = b.product_id) "
+            "RETURNING product_id"
+        )
+        restored = sorted(row[0] for row in cur.fetchall())
+        cur.execute(
+            "SELECT count(*) FROM raw.orders o "
+            "WHERE NOT EXISTS (SELECT 1 FROM raw.products p WHERE p.product_id = o.product_id)"
+        )
+        orphans = cur.fetchone()[0]
+    return {
+        "changed": "products restored",
+        "restored_product_ids": restored,
+        "orders_still_orphaned": orphans,
+    }
