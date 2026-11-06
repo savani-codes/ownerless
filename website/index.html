@@ -1,292 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ownerless · The incident that finds its own missing owner</title>
-  <meta name="description" content="A Switch room where two engineers and two Claude Code agents fix a broken data pipeline together, find the table nobody owns, and change nothing without two people agreeing.">
-  <meta property="og:title" content="Ownerless">
-  <meta property="og:description" content="The incident that finds its own missing owner. Built on Switch for the Flip the Switch Hackathon 2026.">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%231b1817' stroke-width='4' stroke-dasharray='6 4'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23ff9673'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700&family=Funnel+Sans:wght@400;500;600&family=Lilex:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
-
-  <header class="nav">
-    <div class="container nav__inner">
-      <a class="brand" href="#top" aria-label="Ownerless, home">
-        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="6 4"/><circle cx="16" cy="16" r="4" class="brand__dot"/></svg>
-        Ownerless
-      </a>
-      <nav aria-label="Main">
-        <ul class="nav__links">
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#switch">Switch</a></li>
-          <li><a href="#run">Run it</a></li>
-        </ul>
-      </nav>
-      <a class="button button--small" href="https://github.com/savani-codes/ownerless">GitHub <span aria-hidden="true">→</span></a>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- Hero -->
-    <section class="section hero" id="top">
-      <div class="container hero__grid">
-        <div class="hero__copy">
-          <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Flip the Switch Hackathon 2026 · Best Business Workflow</p>
-          <h1 class="h1">The incident that finds its own missing&nbsp;owner.</h1>
-          <p class="lede">A Switch room where two engineers and two Claude Code agents fix a broken data pipeline together. The agents find that the table at fault has no owner. A person takes it in the chat, and nothing changes without two people agreeing.</p>
-          <div class="buttons">
-            <a class="button" href="#demo">Watch the demo <span aria-hidden="true">→</span></a>
-            <a class="button button--outline" href="https://github.com/savani-codes/ownerless">Read the code</a>
-          </div>
-        </div>
-
-        <figure class="window" aria-label="An example incident thread in the #retail-incidents room">
-          <div class="window__bar">
-            <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
-            <span class="window__title"># retail-incidents</span>
-          </div>
-          <ol class="thread">
-            <li class="msg msg--human" style="--i:0">
-              <span class="avatar avatar--j" aria-hidden="true">J</span>
-              <div><p class="msg__who">JARS <span class="msg__role">on call</span></p>
-              <p><b class="mention">@investigator</b> daily_revenue didn't refresh, what happened?</p></div>
-            </li>
-            <li class="msg msg--agent" style="--i:1">
-              <span class="avatar avatar--agent" aria-hidden="true">I</span>
-              <div><p class="msg__who">investigator <span class="tag">agent · read-only</span></p>
-              <p><code>validate_orders</code> failed: 3 products were deleted upstream, so orders point at nothing. <strong>raw.products has no owner in DataHub.</strong> Data Platform owns the other raw tables. Plan for <b class="mention">@operator</b>: a. assign owner, b. restore products, c. rerun.</p></div>
-            </li>
-            <li class="msg msg--human" style="--i:2">
-              <span class="avatar avatar--s" aria-hidden="true">S</span>
-              <div><p class="msg__who">SAV <span class="msg__role">Data Platform</span></p>
-              <p>Data Platform owns products. I approve a, b and c.</p></div>
-            </li>
-            <li class="msg msg--agent" style="--i:3">
-              <span class="avatar avatar--agent avatar--op" aria-hidden="true">O</span>
-              <div><p class="msg__who">operator <span class="tag tag--amber">agent · gated</span></p>
-              <p>Step a: making Data Platform the owner of raw.products.</p>
-              <div class="prompt" role="group" aria-label="Switch permission prompt">
-                <span class="prompt__q">Run <code>ownerless datahub set-owner</code>?</span>
-                <span class="prompt__actions"><span class="chip chip--yes">Allow once</span><span class="chip">Decline</span></span>
-              </div></div>
-            </li>
-            <li class="msg msg--agent" style="--i:4">
-              <span class="avatar avatar--agent avatar--op" aria-hidden="true">O</span>
-              <div><p class="msg__who">operator</p>
-              <p><span class="ok" aria-hidden="true">✓</span> Owner set · products restored · run green. Incident log written.</p></div>
-            </li>
-          </ol>
-          <figcaption class="window__caption">Illustration of the flow. The video shows the real room.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- Statement -->
-    <section class="section section--rule">
-      <div class="container">
-        <p class="statement">At 2 AM the revenue pipeline breaks, and the table at fault has no owner. <span class="statement__muted">Normally that's an hour of tabs, a Slack hunt for a name, and a fix nobody wants an AI to make alone.</span></p>
-        <dl class="stats">
-          <div><dt>people</dt><dd>2</dd></div>
-          <div><dt>messages</dt><dd>2</dd></div>
-          <div><dt>clicks to fix</dt><dd>3</dd></div>
-          <div><dt>unapproved changes</dt><dd>0</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- Demo -->
-    <section class="section section--sand" id="demo">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Demo</p>
-          <h2 class="h2">Three minutes, one thread.</h2>
-        </div>
-        <div class="video" id="video" data-youtube="">
-          <div class="video__placeholder">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="2"/><path d="M26 21l18 11-18 11z" fill="currentColor"/></svg>
-            <p>The demo video lands with our submission.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How it works -->
-    <section class="section" id="how">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">How it works</p>
-          <h2 class="h2">Two people, two agents, one room.</h2>
-          <p class="section-head__sub">Each agent is a Claude Code session with its own instructions and its own permission settings. The people decide; the agents do the legwork.</p>
-        </div>
-        <ol class="steps">
-          <li class="card">
-            <span class="card__num">01</span>
-            <h3 class="card__title">Report</h3>
-            <p class="card__text">The on-call engineer mentions <code>@investigator</code> in the room. That's the whole alert.</p>
-            <span class="tag">JARS · 1 message</span>
-          </li>
-          <li class="card">
-            <span class="card__num">02</span>
-            <h3 class="card__title">Investigate</h3>
-            <p class="card__text">It reads Airflow, the error log, the warehouse, DataHub and lineage, then posts a report where every claim has a link. It spots the table with no owner and asks who should own it.</p>
-            <span class="tag">investigator · read-only</span>
-          </li>
-          <li class="card">
-            <span class="card__num">03</span>
-            <h3 class="card__title">Approve</h3>
-            <p class="card__text">The Data Platform lead takes ownership and approves the numbered plan in plain words. An agent's message never counts as approval.</p>
-            <span class="tag tag--peach">SAV · 1 message</span>
-          </li>
-          <li class="card">
-            <span class="card__num">04</span>
-            <h3 class="card__title">Fix and log</h3>
-            <p class="card__text"><code>@operator</code> assigns the owner, restores the data and reruns the pipeline. Each step stops at a permission prompt. Then it verifies and writes the incident log.</p>
-            <span class="tag tag--amber">operator · 3 Allow clicks</span>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Two keys -->
-    <section class="section section--dark">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow eyebrow--dark">Safety</p>
-          <h2 class="h2">Every change needs two keys.</h2>
-        </div>
-        <div class="keys">
-          <div class="key">
-            <span class="key__label">Key one</span>
-            <h3>The owner approves</h3>
-            <p>A person who owns the dataset approves the numbered steps in the thread. The operator acts on nothing else.</p>
-          </div>
-          <div class="key">
-            <span class="key__label">Key two</span>
-            <h3>A person allows each command</h3>
-            <p>Writes are never allowlisted, so Claude Code asks, and Switch shows Allow / Decline in the room. CI fails if a write ever slips into an allowlist.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Switch -->
-    <section class="section" id="switch">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Built on Switch</p>
-          <h2 class="h2">The room is the product.</h2>
-          <p class="section-head__sub">There's no web app. <a href="https://switchagents.ai">Switch</a> brings the agents into the chat where the team already works, and keeps them in check.</p>
-        </div>
-        <div class="features">
-          <div class="feature"><h3>Room template</h3><p>One form creates both agents, the room, its rules, a group directory and a kickoff.</p></div>
-          <div class="feature"><h3>Two agents, one room</h3><p>Separate Claude Code sessions, each in its own folder with its own role and permissions.</p></div>
-          <div class="feature"><h3>@mentions and threads</h3><p>People start agents, agents hand off to each other, and the whole incident lives in one thread.</p></div>
-          <div class="feature"><h3>Permission prompts</h3><p>Every write waits for Allow or Decline from a person, right in the chat.</p></div>
-          <div class="feature"><h3>Room instructions</h3><p>The workflow and the two-key rule, read by every agent that joins.</p></div>
-          <div class="feature"><h3>Room documents</h3><p>A group directory goes in. The incident log comes out.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Architecture -->
-    <section class="section section--sand">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Architecture</p>
-          <h2 class="h2">One tool, four systems.</h2>
-          <p class="section-head__sub">The agents have exactly one tool: the <code>ownerless</code> CLI. It prints JSON with a link for every entity. Reads run freely; writes stop for a person.</p>
-        </div>
-        <div class="arch" role="img" aria-label="Discord connects to Switch Console, which runs the investigator and operator agents. Both use the ownerless CLI, which talks to Airflow, DataHub, Postgres and Cognee.">
-          <div class="arch__col">
-            <div class="node node--chat">Discord<br><small>#retail-incidents</small></div>
-          </div>
-          <div class="arch__link" aria-hidden="true"></div>
-          <div class="arch__col">
-            <div class="node node--switch">Switch Console</div>
-          </div>
-          <div class="arch__link" aria-hidden="true"></div>
-          <div class="arch__col arch__col--stack">
-            <div class="node">@investigator<br><small>read-only</small></div>
-            <div class="node">@operator<br><small>writes gated</small></div>
-          </div>
-          <div class="arch__link" aria-hidden="true"></div>
-          <div class="arch__col">
-            <div class="node node--cli"><code>ownerless</code> CLI</div>
-          </div>
-          <div class="arch__link" aria-hidden="true"></div>
-          <div class="arch__col arch__col--stack">
-            <div class="node node--sys">Airflow 3.3</div>
-            <div class="node node--sys">DataHub</div>
-            <div class="node node--sys">Postgres</div>
-            <div class="node node--sys">Cognee</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Run it -->
-    <section class="section" id="run">
-      <div class="container run">
-        <div class="section-head section-head--left">
-          <p class="eyebrow">Run it</p>
-          <h2 class="h2">From a clean clone to a broken pipeline.</h2>
-          <p class="section-head__sub">Windows with Git Bash, macOS or Linux. You need Docker, uv, the DataHub CLI and Switch Console with Claude Code. Then create the room from <code>switch/ownerless.template.yaml</code>.</p>
-          <a class="button button--outline" href="https://github.com/savani-codes/ownerless#run-it">Full instructions <span aria-hidden="true">→</span></a>
-        </div>
-        <pre class="code"><code><span class="c"># the stack</span>
-git clone --recurse-submodules \
-  https://github.com/savani-codes/ownerless.git
-cd ownerless
-datahub docker quickstart
-scripts/setup.sh
-scripts/up.sh --seed
-scripts/preflight.sh
-
-<span class="c"># the incident</span>
-ownerless scenario reset
-ownerless scenario break
-ownerless scenario trigger
-
-<span class="c"># then, in the room</span>
-<span class="p">@investigator</span> daily_revenue didn't refresh, what happened?</code></pre>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section section--rule cta">
-      <div class="container">
-        <h2 class="statement">The next incident starts with a name.</h2>
-        <div class="buttons buttons--center">
-          <a class="button" href="https://github.com/savani-codes/ownerless">View on GitHub <span aria-hidden="true">→</span></a>
-          <a class="button button--outline" href="https://switchagents.ai">Learn about Switch</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <p>Built by <a href="https://github.com/jishanahmed-shaikh">JARS</a> and <a href="https://github.com/savani-codes">SAV</a> for the <a href="https://www.wemakedevs.org/hackathons/switch">Flip the Switch Hackathon 2026</a>.</p>
-      <p>Apache-2.0 · Uses <a href="https://switchagents.ai">Switch</a>, DataHub, Apache Airflow and Cognee. Not affiliated with them.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Set data-youtube on #video to a YouTube video id once the demo is published.
-    const video = document.getElementById("video");
-    const id = video.dataset.youtube;
-    if (id) {
-      video.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-        '" title="Ownerless demo" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ownerless · The incident that finds its own missing owner</title>
+    <meta
+      name="description"
+      content="A Switch room where two engineers and two Claude Code agents fix a broken data pipeline together, find the table nobody owns, and change nothing without two people agreeing."
+    />
+    <meta name="theme-color" content="#fbf5ee" />
+    <meta property="og:title" content="Ownerless" />
+    <meta property="og:description" content="The incident that finds its own missing owner. Built on Switch for the Flip the Switch Hackathon 2026." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://savani-codes.github.io/ownerless/" />
+    <meta property="og:image" content="https://savani-codes.github.io/ownerless/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700&family=Funnel+Sans:wght@400;500;600&family=Lilex:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Ownerless needs JavaScript for this page. The README on GitHub has everything: https://github.com/savani-codes/ownerless</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

@@ -24,3 +24,4 @@ Thumbs.db
 # Recordings and scratch
 recordings/
 *.log
+node_modules/

@@ -1,0 +1,59 @@
+.button {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 6rem;
+  z-index: 30;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 8px 24px -8px rgb(27 24 23 / 0.35);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity 0.3s,
+    transform 0.3s var(--ease);
+}
+.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.button:hover .arrow {
+  transform: translateY(-2px);
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+.track,
+.fill {
+  fill: none;
+  stroke-width: 2.5;
+}
+.track {
+  stroke: var(--rule);
+}
+.fill {
+  stroke: var(--flame);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+}
+.arrow {
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 0.2s var(--ease);
+}
+
+@media (max-width: 640px) {
+  .button {
+    right: 1rem;
+    bottom: 5.25rem;
+  }
+}

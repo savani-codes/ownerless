@@ -1,0 +1,118 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgb(254 253 252 / 0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background 0.3s,
+    border-color 0.3s;
+}
+.scrolled {
+  background: rgb(254 253 252 / 0.88);
+  border-bottom-color: var(--rule);
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: var(--nav-h);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font: 700 1.25rem var(--display);
+  text-decoration: none;
+}
+.links ul {
+  display: flex;
+  gap: 0.25rem;
+}
+.links a {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 99px;
+  text-decoration: none;
+  color: var(--ink-2);
+  font-weight: 500;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.links a:hover {
+  color: var(--ink);
+}
+.links a[aria-current="true"] {
+  color: var(--ink);
+  background: var(--sand-deep);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.menu {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--paper);
+  cursor: pointer;
+  place-content: center;
+  gap: 5px;
+}
+.menu span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--ink);
+  transition: transform 0.25s var(--ease);
+}
+.menu[aria-expanded="true"] span:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+.menu[aria-expanded="true"] span:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--flame);
+  transform-origin: left;
+}
+
+@media (max-width: 760px) {
+  .menu {
+    display: grid;
+  }
+  .links {
+    position: absolute;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.75rem 1.25rem 1.25rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition:
+      opacity 0.25s,
+      transform 0.25s var(--ease);
+  }
+  .links.open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .links ul {
+    flex-direction: column;
+  }
+}

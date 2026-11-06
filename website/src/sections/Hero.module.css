@@ -1,0 +1,65 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--sand);
+  padding-top: 5rem;
+}
+.glow {
+  position: absolute;
+  width: 46rem;
+  height: 46rem;
+  right: -14rem;
+  top: -16rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 150 115 / 0.22), transparent 62%);
+  animation: drift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 3.5rem;
+  align-items: center;
+}
+.copy {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+.dot {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--flame);
+  box-shadow: 0 0 0 0 rgb(255 150 115 / 0.6);
+  animation: pulse 2.4s infinite;
+}
+.lede {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+  max-width: 34rem;
+}
+
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 8px rgb(255 150 115 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 150 115 / 0);
+  }
+}
+@keyframes drift {
+  to {
+    transform: translate(-4rem, 3rem) scale(1.08);
+  }
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

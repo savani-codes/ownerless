@@ -1,0 +1,76 @@
+.mark {
+  flex: none;
+  overflow: visible;
+}
+.owner {
+  fill: var(--owner, #ff875e);
+}
+.person {
+  fill: var(--sand);
+}
+.tl,
+.tr,
+.bl,
+.br {
+  transform-box: fill-box;
+}
+.tl {
+  --dx: -36px;
+  --dy: -36px;
+}
+.tr {
+  --dx: 36px;
+  --dy: -36px;
+}
+.bl {
+  --dx: -36px;
+  --dy: 36px;
+}
+.br {
+  --dx: 36px;
+  --dy: 36px;
+}
+
+/* Brackets close in on the owner, like a camera locking focus. */
+.once :is(.tl, .tr, .bl, .br) {
+  animation: lock 0.9s var(--ease) 0.2s both;
+}
+.once .owner {
+  animation: claim 0.9s var(--ease) 0.2s both;
+}
+.loop :is(.tl, .tr, .bl, .br) {
+  animation: search 3.2s var(--ease) infinite;
+}
+
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+@keyframes lock {
+  from {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0.25;
+  }
+}
+@keyframes claim {
+  0%,
+  40% {
+    fill: var(--rule);
+  }
+}
+@keyframes search {
+  0%,
+  100% {
+    transform: none;
+  }
+  45%,
+  55% {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0.35;
+  }
+}
