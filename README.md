@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/assets/logo.png" alt="Ownerless" width="560"></p>
+
 # Ownerless
 
 **The incident that finds its own missing owner.**
@@ -114,11 +116,12 @@ scenario/    how the demo incident is staged and reset
 scripts/     setup, start, stop, memory sync and preflight (bash)
 deploy/      example config files
 docs/        architecture and the demo script
-website/     the showcase page (static HTML and CSS, deployed to GitHub Pages)
+website/     the showcase site (Vite, React, TypeScript), deployed to GitHub Pages
 vendor/      cognee-data-lab (git submodule): the demo Airflow, warehouse and Cognee lab
 ```
 
-Tests: `cd tools && uv run pytest`. CI also checks that no write command is ever allowlisted.
+Tests: `cd tools && uv run pytest` and `cd website && npm test`. CI also checks that no write
+command is ever allowlisted, shellchecks the scripts and builds the website.
 
 ## What we reused, and what is new
 

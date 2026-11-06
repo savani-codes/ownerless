@@ -16,15 +16,16 @@ tools/         the ownerless CLI: the only code that talks to Airflow, DataHub, 
 scenario/      how the demo incident is broken and reset (commands live in the CLI)
 deploy/        local configuration; nothing is deployed to the cloud
 scripts/       setup, start/stop the data stack, preflight checks (run from Git Bash on Windows)
-docs/          architecture, demo script, Windows notes
-website/       the static showcase page
+docs/          architecture, demo script, logo assets
+website/       the showcase site: Vite + React + TypeScript, deployed to GitHub Pages
 vendor/        cognee-data-lab as a pinned, unmodified submodule
 ```
 
 ## Rules
 
 1. **Switch is the only user interface.** No web app, no dashboard. If a person needs to see
-   something, an agent posts it in the room or links to Airflow or DataHub.
+   something, an agent posts it in the room or links to Airflow or DataHub. `website/` is a
+   static showcase about the project; it never talks to the data platform or the agents.
 2. **The CLI is the only integration layer.** Agents never call services with curl; they call
    `ownerless`. Every read returns links for the entities it mentions.
 3. **Reads are allowlisted, writes are not.** A new write command must be left out of both
@@ -41,9 +42,15 @@ vendor/        cognee-data-lab as a pinned, unmodified submodule
 ```bash
 cd tools && uv sync && uv run pytest && uv run ruff check .
 ownerless --help
+cd website && npm ci && npm run dev        # http://localhost:5173/ownerless/
+cd website && npm test && npm run build    # what CI runs
 ```
 
 ## Style
 
 Python 3.11+, ruff (line length 110), type hints on public functions, standard library first.
+Website: strict TypeScript, function components, one CSS module per component, all copy in
+`website/src/content.ts`, and no new runtime dependencies beyond React without a good reason.
+Every animation must respect `prefers-reduced-motion`.
+Public copy names the team only as JARS and SAV.
 Commits: Conventional Commits, one intent per commit, no AI attribution or co-author trailers.
