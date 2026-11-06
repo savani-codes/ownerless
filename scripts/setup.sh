@@ -7,9 +7,9 @@ need git "Install Git for Windows: https://git-scm.com/download/win"
 need uv "Install uv: https://docs.astral.sh/uv/getting-started/installation/"
 need docker "Install Docker Desktop and start it."
 
-say "cognee-data-lab (vendor/)"
+say "The data stack (stack/, from cognee-data-lab)"
 git -C "$ROOT" submodule update --init --recursive
-ok "vendor/cognee-data-lab at $(git -C "$LAB" rev-parse --short HEAD)"
+ok "stack/ at $(git -C "$STACK" rev-parse --short HEAD)"
 
 say "The ownerless CLI"
 # Editable, so the agents always run the code in this checkout.

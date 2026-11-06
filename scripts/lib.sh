@@ -4,7 +4,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LAB="$ROOT/vendor/cognee-data-lab"
+STACK="$ROOT/stack"
 CONFIG="$ROOT/ownerless.toml"
 
 say() { printf '\n== %s\n' "$*"; }
@@ -28,7 +28,7 @@ load_env() {
   fi
 }
 
-lab_compose() { (cd "$LAB" && docker compose --profile demo "$@"); }
+stack_compose() { (cd "$STACK" && docker compose --profile demo "$@"); }
 
 http_ok() { curl -fsS -o /dev/null --max-time 5 "$1"; }
 

@@ -34,7 +34,7 @@ sequenceDiagram
 | Chat | Discord, bridged by Switch | `switch/ownerless.template.yaml` |
 | Agents | Two Claude Code sessions run by Switch Console | `agents/investigator/`, `agents/operator/` |
 | Tool | `ownerless`, a Python CLI that prints JSON with links | `tools/ownerless/` |
-| Platform | Airflow 3.3, Postgres, Cognee lab (Docker), DataHub (quickstart) | `vendor/cognee-data-lab`, `scripts/` |
+| Platform | Airflow 3.3, Postgres, Cognee lab (Docker), DataHub (quickstart) | `stack/`, `scripts/` |
 
 ## Why a CLI and not MCP servers
 

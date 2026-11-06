@@ -7,7 +7,7 @@ It builds on the following work, which keeps its own license and notices:
 
 - cognee-data-lab (https://github.com/jars-demo/cognee-data-lab)
   Apache License 2.0. Included unmodified as the git submodule
-  vendor/cognee-data-lab: the Airflow and DataHub connectors for cognee, the
+  stack/: the Airflow and DataHub connectors for cognee, the
   demo Airflow DAGs, the Postgres warehouse, the DataHub seed and the lab's
   /api/ask endpoint. Its third-party logo notices are in its own NOTICE file.
 

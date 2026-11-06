@@ -18,7 +18,7 @@ deploy/        local configuration; nothing is deployed to the cloud
 scripts/       setup, start/stop the data stack, preflight checks (run from Git Bash on Windows)
 docs/          architecture, demo script, logo assets
 website/       the showcase site: Vite + React + TypeScript, deployed to GitHub Pages
-vendor/        cognee-data-lab as a pinned, unmodified submodule
+stack/         the demo data stack: cognee-data-lab as a pinned, unmodified git submodule
 ```
 
 ## Rules
@@ -31,7 +31,7 @@ vendor/        cognee-data-lab as a pinned, unmodified submodule
 3. **Reads are allowlisted, writes are not.** A new write command must be left out of both
    agents' `permissions.allow` so it always raises a Switch permission prompt, and must be in
    the investigator's `permissions.deny`.
-4. **Never modify `vendor/`.** Change behaviour in this repo, or open a PR upstream.
+4. **Never modify `stack/`.** Change behaviour in this repo, or open a PR upstream.
 5. **Secrets stay in `ownerless.toml`** (gitignored). Switch passes agents only a fixed set of
    environment variables, so the CLI reads its config from that file, not from the shell.
 6. **The scenario is deterministic.** `reset` must return the platform to the same state every

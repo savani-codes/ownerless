@@ -117,7 +117,7 @@ scripts/     setup, start, stop, memory sync and preflight (bash)
 deploy/      example config files
 docs/        architecture and the demo script
 website/     the showcase site (Vite, React, TypeScript), deployed to GitHub Pages
-vendor/      cognee-data-lab (git submodule): the demo Airflow, warehouse and Cognee lab
+stack/       the demo data stack (git submodule of cognee-data-lab): Airflow, warehouse, Cognee lab
 ```
 
 Tests: `cd tools && uv run pytest` and `cd website && npm test`. CI also checks that no write

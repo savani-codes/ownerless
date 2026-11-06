@@ -9,10 +9,10 @@ load_env
 
 if [[ "${1:-}" == "--wipe" ]]; then
   say "Removing the lab's DataHub entities"
-  (cd "$LAB" && docker compose run --rm seed python cleanup_datahub.py --yes) || bad "skipped"
+  (cd "$STACK" && docker compose run --rm seed python cleanup_datahub.py --yes) || bad "skipped"
   say "Removing the containers and their volumes"
-  lab_compose down -v
+  stack_compose down -v
 else
   say "Stopping the containers"
-  lab_compose down
+  stack_compose down
 fi
