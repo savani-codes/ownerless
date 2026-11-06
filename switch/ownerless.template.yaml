@@ -1,0 +1,117 @@
+# Ownerless: the #retail-incidents room, its two agents, and its people.
+#
+# In Switch Console: Your Rooms > Create from template, pick this file, fill in the form.
+# One run creates @investigator and @operator (Claude Code, each in its own folder of this
+# repository), the room on your messaging app, the room's instructions and group directory,
+# and posts a kickoff so both agents introduce themselves.
+#
+# Format: Switch's template language, version 1 (docs/TEMPLATES.md in sandbox-quantum/switch),
+# modelled on examples/agent-templates/triage-pair.template.yaml.
+version: 1
+
+params:
+  repo_dir:
+    type: directory
+    description: >-
+      Your clone of this repository, on the machine the agents run on. Each agent works in its
+      own folder under agents/, where its CLAUDE.md and permission settings live.
+  owner:
+    type: user
+    description: >-
+      The person who plays the Data Platform lead and approves changes (Savani in our demo),
+      by their username on the messaging app.
+  bridge:
+    type: bridge
+    description: The messaging app the room lives in. Our demo uses Discord.
+    default: [$first]
+  provider:
+    type: provider
+    description: The coding agent behind both agents. Ownerless is built and tested on Claude Code.
+    default: [claude]
+    input: advanced
+  location:
+    type: location
+    description: >-
+      Where both agents run. It must reach Airflow, DataHub, Postgres and cognee-data-lab on
+      localhost, so keep it on the machine that runs the data stack.
+    default: local
+    input: advanced
+  model:
+    type: string
+    description: The model both agents use.
+    default: sonnet
+    input: advanced
+
+agents:
+  - name: investigator
+    display_name: Investigator
+    description: Read-only. Finds what broke and why, proves it, and hands a numbered fix to @operator.
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{repo_dir}/agents/investigator"
+    model: "{model}"
+    auto_mode: false
+    auto_approve: false
+    addressing: anyone
+    instructions: |
+      You are @investigator in the #retail-incidents room. Your full role, tools and report
+      format are in CLAUDE.md in your working directory; follow it exactly. You only read:
+      every change goes to @operator as a numbered plan.
+
+  - name: operator
+    display_name: Operator
+    description: Makes approved changes one at a time, verifies each, and writes the incident log.
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{repo_dir}/agents/operator"
+    model: "{model}"
+    auto_mode: false
+    auto_approve: false
+    addressing: anyone
+    instructions: |
+      You are @operator in the #retail-incidents room. Your full role and the two-key rule are
+      in CLAUDE.md in your working directory; follow it exactly. You change nothing until a
+      person approves the plan in the thread, and each change waits for a permission prompt.
+
+room:
+  name: retail-incidents
+  description: People and agents fix retail data-platform incidents together. Every change needs two people.
+  bridge: "{bridge}"
+  agents: [investigator, operator]
+  users: ["{$creator}", "{owner}"]
+  instructions: |
+    This room handles incidents on the retail demo data platform: Airflow runs
+    retail_analytics_pipeline nightly at 02:00, Postgres holds raw.* and analytics.* tables,
+    DataHub catalogs them with owners and lineage, and Cognee remembers both.
+
+    How we work:
+    1. A person reports a problem by addressing @investigator.
+    2. @investigator only reads. It posts one report in the thread: Summary, Evidence, Root
+       cause chain, Owners, Proposed fix (numbered a, b, c), every claim linked to Airflow or
+       DataHub. It hands the numbered plan to @operator.
+    3. A dataset with no owner is a finding, not a footnote. Ask the room who owns it; use the
+       group directory document to tag the right person.
+    4. Two keys for every change. Key one: the dataset's owner (a person, never an agent)
+       approves the numbered steps in the thread. Key two: each change raises a Switch
+       permission prompt that {$creator} allows.
+    5. @operator runs approved steps one at a time, checks each, stops on the first failure,
+       and finishes with an incident log room document.
+
+    Keep messages short. Link instead of pasting JSON. Never guess ids, numbers or URLs.
+  docs:
+    - name: Group directory
+      description: Which person speaks for each DataHub owner group.
+      instructions: Read this when a report names an owner group, or when a dataset has no owner and you need to know whom to ask.
+      content: |
+        | DataHub group | URN | Person in this room |
+        | --- | --- | --- |
+        | Data Platform | urn:li:corpGroup:retail_demo_data_platform | {owner} |
+        | Revenue Analytics | urn:li:corpGroup:retail_demo_revenue_analytics | {$creator} |
+
+        Data Platform owns the raw.* tables it ingests (raw.orders, raw.customers). It is the
+        likeliest owner for any raw.* table that has none, but only that person can accept it.
+
+kickoff: |
+  @investigator @operator: welcome to #retail-incidents. Read your CLAUDE.md, the room
+  instructions and the group directory, then each introduce yourself in one line: what you do
+  and what you will never do.
