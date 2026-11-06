@@ -64,4 +64,9 @@ describe("knowledge", () => {
     const text = JSON.stringify(knowledge).toLowerCase();
     expect(text).not.toMatch(/jishan|savani(?!-codes)/);
   });
+
+  it("never names the projects the data stack came from", () => {
+    const text = JSON.stringify(knowledge).toLowerCase();
+    expect(text).not.toMatch(/cognee-data-lab|datahub-ai-rca|jars-demo|vendor/);
+  });
 });

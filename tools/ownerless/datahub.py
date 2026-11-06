@@ -1,7 +1,6 @@
 """DataHub GraphQL on GMS: datasets, owners, lineage and search.
 
-Query shapes are adapted from datahub-ai-rca (backend/app/services/datahub_api.py). Every entity
-comes back with a link to the DataHub UI and a list of governance gaps (no owner, no description,
+Every entity comes back with a link to the DataHub UI and a list of governance gaps (no owner, no description,
 no tags), because a missing owner is often the real root cause.
 """
 

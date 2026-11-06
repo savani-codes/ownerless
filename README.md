@@ -123,16 +123,14 @@ stack/       the demo data stack (git submodule): Airflow, warehouse, DataHub se
 Tests: `cd tools && uv run pytest` and `cd website && npm test`. CI also checks that no write
 command is ever allowlisted, shellchecks the scripts and builds the website.
 
-## What we reused, and what is new
+## What's in this repository
 
-| Reused | From |
-| --- | --- |
-| Demo Airflow 3.3, the retail warehouse, the DataHub seed, Cognee memory and `/api/ask` | The data stack in `stack/`, our earlier work, as a pinned submodule and unchanged |
-| The report shape (summary, evidence, root cause chain, owners, fix) and DataHub GraphQL query shapes | [datahub-ai-rca](https://github.com/jars-demo/datahub-ai-rca), our earlier project |
+Built for this hackathon: the Switch template and room design, both agents' roles and permission
+settings, the `ownerless` CLI with its gated write commands, the staged incident, the scripts, the
+website and the two-key workflow.
 
-New for this hackathon: the Switch template and room design, both agents' roles and permission
-settings, the `ownerless` CLI with its gated write commands, the staged incident, the scripts and
-the two-key workflow.
+The demo data platform in `stack/` (Airflow 3.3, the retail warehouse, the DataHub seed and Cognee)
+is a pinned git submodule, used unchanged.
 
 ## Credits and license
 
