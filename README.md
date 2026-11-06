@@ -25,10 +25,10 @@ Ownerless turns that hour into one chat thread:
 
 | Who | Does |
 | --- | --- |
-| **Jishan** (on-call engineer) | Posts one message: `@investigator daily_revenue didn't refresh, what happened?` |
+| **JARS** (on-call engineer) | Posts one message: `@investigator daily_revenue didn't refresh, what happened?` |
 | **@investigator** (read-only agent) | Reads the failed run, the error log, the DAG, the warehouse, DataHub and lineage. Posts a report with links, finds that `raw.products` has **no owner**, suggests Data Platform, and hands a numbered fix to `@operator` |
-| **Savani** (Data Platform lead) | Posts one message: "Data Platform owns products, I approve a, b and c" (**key one**) |
-| **@operator** (gated agent) | Runs each step: assign the owner in DataHub, restore the products, rerun the pipeline. Each raises a Switch permission prompt that Jishan allows (**key two**), then it checks the result |
+| **SAV** (Data Platform lead) | Posts one message: "Data Platform owns products, I approve a, b and c" (**key one**) |
+| **@operator** (gated agent) | Runs each step: assign the owner in DataHub, restore the products, rerun the pipeline. Each raises a Switch permission prompt that JARS allows (**key two**), then it checks the result |
 | **@operator** | Verifies the revenue table and writes an incident log as a room document |
 
 Two humans, two messages and three clicks. The dataset ends up with an owner, so the next
@@ -54,7 +54,7 @@ Switch is the whole interface. There is no web app; the room is the product.
 ```mermaid
 flowchart LR
   subgraph Discord["Discord: #retail-incidents"]
-    J[Jishan] --- S[Savani]
+    J[JARS] --- S[SAV]
   end
   Discord <--> SW[Switch Console]
   SW --> I["@investigator<br/>Claude Code, read-only"]
@@ -133,8 +133,8 @@ the two-key workflow.
 
 ## Credits and license
 
-Built by [Jishan Ahmed Shaikh](https://github.com/jishanahmed-shaikh) and
-[Savani](https://github.com/savani-codes). Thanks to Switch (SandboxAQ), DataHub, Apache Airflow
+Built by [JARS](https://github.com/jishanahmed-shaikh) and
+[SAV](https://github.com/savani-codes). Thanks to Switch (SandboxAQ), DataHub, Apache Airflow
 and Cognee.
 
 [Apache License 2.0](LICENSE). Third-party notices are in [NOTICE](NOTICE).

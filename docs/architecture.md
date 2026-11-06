@@ -5,8 +5,8 @@ small CLI is the only code that touches the data platform.
 
 ```mermaid
 sequenceDiagram
-  actor J as Jishan (on call)
-  actor S as Savani (Data Platform)
+  actor J as JARS (on call)
+  actor S as SAV (Data Platform)
   participant R as #retail-incidents (Switch)
   participant I as @investigator
   participant O as @operator

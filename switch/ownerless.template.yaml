@@ -18,7 +18,7 @@ params:
   owner:
     type: user
     description: >-
-      The person who plays the Data Platform lead and approves changes (Savani in our demo),
+      The person who plays the Data Platform lead and approves changes (SAV in our demo),
       by their username on the messaging app.
   bridge:
     type: bridge
