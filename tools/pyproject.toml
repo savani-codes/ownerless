@@ -10,6 +10,10 @@ dependencies = [
     "psycopg[binary]>=3.1",
 ]
 
+[project.urls]
+Homepage = "https://savani-codes.github.io/ownerless/"
+Repository = "https://github.com/savani-codes/ownerless"
+
 [project.scripts]
 ownerless = "ownerless.cli:main"
 
