@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "mcp__switch",
+      "Bash(ownerless --help)",
+      "Bash(ownerless airflow failed-runs:*)",
+      "Bash(ownerless airflow run-status:*)",
+      "Bash(ownerless datahub entity:*)",
+      "Bash(ownerless warehouse query:*)"
+    ],
+    "deny": [
+      "Bash(ownerless datahub token:*)",
+      "Bash(ownerless scenario:*)",
+      "Bash(curl:*)",
+      "Bash(psql:*)",
+      "Bash(docker:*)",
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "WebFetch",
+      "WebSearch"
+    ]
+  }
+}
