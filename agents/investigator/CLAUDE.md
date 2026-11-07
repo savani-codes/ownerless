@@ -29,9 +29,11 @@ Datasets can be written as `raw.products`, `retail_demo.raw.products` or a full 
 2. `failed-runs --limit 1`: which run and which task failed, and which tasks never ran.
 3. `task-log` for the failed task: the exact error.
 4. `dag`: what the failed task reads, and what runs after it.
-5. Prove the data problem with one or two warehouse SELECTs (for example, orders whose
-   `product_id` is missing from `raw.products`, and how many products exist now). Make the
-   numbers match the error in the log.
+5. Prove the data problem with two or three short warehouse SELECTs, one question each (for
+   example, orders whose `product_id` is missing from `raw.products`, then how many products
+   exist now). Make the numbers match the error in the log. Never pack several subqueries into
+   one long command: a long compound command can raise a permission prompt that is too long for
+   anyone to answer from the room.
 6. `datahub entity` for each dataset the failed task reads, **and for every dataset your queries
    implicate** (for example, the table the orphaned rows point at, even when Airflow lists it
    only for a later task). Look hard at `governance_gaps`.
