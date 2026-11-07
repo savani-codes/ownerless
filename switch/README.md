@@ -12,7 +12,9 @@ the room's rules, a group directory, and a kickoff message.
    outward and both of us can join from our own machines. The bundled Mattermost also works.
 3. Link your own chat account ("This is me"), so the agents know you are their owner.
 4. **Your Rooms > Create from template**, choose `switch/ownerless.template.yaml`, and fill in:
-   - **repo_dir**: the folder you cloned this repo into
+   - **Repository folder**: the folder you cloned this repo into, typed with forward slashes and
+     no trailing slash (for example `E:/work/ownerless`). Each agent card should then show
+     `<folder>/agents/investigator` or `<folder>/agents/operator`
    - **owner**: your teammate's username on the messaging app
 5. The kickoff posts in `#retail-incidents`, and both agents introduce themselves.
 

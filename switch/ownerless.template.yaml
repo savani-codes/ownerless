@@ -11,7 +11,8 @@ version: 1
 
 params:
   repo_dir:
-    type: directory
+    type: string
+    label: Repository folder
     description: >-
       Your clone of this repository, on the machine the agents run on. Each agent works in its
       own folder under agents/, where its CLAUDE.md and permission settings live.
