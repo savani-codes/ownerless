@@ -25,18 +25,6 @@ params:
     type: bridge
     description: The messaging app the room lives in. Our demo uses Discord.
     default: [$first]
-  provider:
-    type: provider
-    description: The coding agent behind both agents. Ownerless is built and tested on Claude Code.
-    default: [claude]
-    input: advanced
-  location:
-    type: location
-    description: >-
-      Where both agents run. It must reach Airflow, DataHub, Postgres and Cognee on
-      localhost, so keep it on the machine that runs the data stack.
-    default: local
-    input: advanced
   model:
     type: string
     description: The model both agents use.
@@ -47,8 +35,8 @@ agents:
   - name: investigator
     display_name: Investigator
     description: Read-only. Finds what broke and why, proves it, and hands a numbered fix to @operator.
-    provider: "{provider}"
-    location: "{location}"
+    provider: claude
+    location: local
     directory: "{repo_dir}/agents/investigator"
     model: "{model}"
     auto_mode: false
@@ -63,8 +51,8 @@ agents:
   - name: operator
     display_name: Operator
     description: Makes approved changes one at a time, verifies each, and writes the incident log.
-    provider: "{provider}"
-    location: "{location}"
+    provider: claude
+    location: local
     directory: "{repo_dir}/agents/operator"
     model: "{model}"
     auto_mode: false
