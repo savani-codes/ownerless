@@ -108,6 +108,10 @@ Then in the room: `daily_revenue didn't refresh last night, what happened? @inve
 [scenario/README.md](scenario/README.md) explains each step and what a correct investigation finds.
 `scripts/down.sh` stops the stack (`--wipe` removes its data).
 
+If a command says `DataHub rejected the token in ownerless.toml`, DataHub's containers were
+recreated and the saved token died with them. Set `token = ""` under `[datahub]` in
+`ownerless.toml` and run `scripts/setup.sh` again: it makes and saves a new one.
+
 ## Repository
 
 ```
