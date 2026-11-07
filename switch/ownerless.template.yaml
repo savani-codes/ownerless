@@ -1,6 +1,6 @@
 # Ownerless: the #retail-incidents room, its two agents, and its people.
 #
-# In Switch Console: Your Rooms > Create from template, pick this file, fill in the form.
+# In Switch Console 0.40.1+: Templates > Import this file, Use template, fill in the form.
 # One run creates @investigator and @operator (Claude Code, each in its own folder of this
 # repository), the room on your messaging app, the room's instructions and group directory,
 # and posts a kickoff so both agents introduce themselves.
@@ -54,6 +54,7 @@ agents:
     auto_mode: false
     auto_approve: false
     addressing: anyone
+    allow_existing: true
     instructions: |
       You are @investigator in the #retail-incidents room. Your full role, tools and report
       format are in CLAUDE.md in your working directory; follow it exactly. You only read:
@@ -69,6 +70,7 @@ agents:
     auto_mode: false
     auto_approve: false
     addressing: anyone
+    allow_existing: true
     instructions: |
       You are @operator in the #retail-incidents room. Your full role and the two-key rule are
       in CLAUDE.md in your working directory; follow it exactly. You change nothing until a
