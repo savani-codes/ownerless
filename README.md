@@ -78,7 +78,8 @@ Switch, and Switch asks a person in the room. More in [docs/architecture.md](doc
 You need Windows with Git Bash (or macOS / Linux), Docker Desktop with about 8 GB of memory,
 [uv](https://docs.astral.sh/uv/), the [DataHub CLI](https://docs.datahub.com/docs/quickstart)
 (`uv tool install acryl-datahub`), and
-[Switch Console](https://github.com/sandbox-quantum/switch/releases/latest) with Claude Code.
+[Switch Console](https://github.com/sandbox-quantum/switch/releases/latest) **0.40.1 or newer**
+with Claude Code (older Windows builds can't run agents on Windows).
 
 ```bash
 git clone --recurse-submodules https://github.com/savani-codes/ownerless.git
@@ -90,9 +91,10 @@ scripts/memory-sync.sh          # optional: Cognee memory (add an LLM key to .en
 scripts/preflight.sh            # every check should say ok
 ```
 
-Then create the room: in Switch Console, **Your Rooms > Create from template**, choose
-`switch/ownerless.template.yaml`, and pick this folder and your teammate.
-[switch/README.md](switch/README.md) walks through it.
+Then create the room: in Switch Console, **Templates > Import** `switch/ownerless.template.yaml`,
+**Use template**, and pick this folder and your teammate.
+[switch/README.md](switch/README.md) walks through it, including the Discord bot and a
+[troubleshooting table](switch/README.md#troubleshooting) for every snag we hit.
 
 ### Run the incident
 

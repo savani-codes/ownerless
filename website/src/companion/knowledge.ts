@@ -155,7 +155,7 @@ export const knowledge: Entry[] = [
     question: "How do I create the room from the template?",
     keywords: ["template", "yaml", "create", "room", "kickoff", "instructions", "directory", "documents", "configure", "config"],
     answer: [
-      "In Switch Console: Your Rooms → Create from template → switch/ownerless.template.yaml. You pick the repository folder and the dataset owner, and one run creates both agents, the #retail-incidents room, its rules, a group directory and a kickoff where both agents introduce themselves.",
+      "In Switch Console: Templates → Import switch/ownerless.template.yaml → Use template. You pick the repository folder and the dataset owner, and one run creates both agents, the #retail-incidents room, its rules, a group directory and a kickoff where both agents introduce themselves.",
     ],
     link: { label: "switch/README.md", href: `${REPO}/tree/main/switch` },
     next: ["switch", "run"],
