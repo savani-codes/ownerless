@@ -10,7 +10,7 @@ export const links = {
 } as const;
 
 /** Set to the YouTube video id once the demo is published; the Demo section embeds it. */
-export const demoVideoId = "";
+export const demoVideoId = "PQA5yh0pJDk";
 
 export const nav = [
   { id: "how", label: "How it works" },

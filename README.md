@@ -13,7 +13,7 @@ command through Switch's permission prompts.
 Built for the [Flip the Switch Hackathon 2026](https://www.wemakedevs.org/hackathons/switch),
 Best Business Workflow track.
 
-> Website: [savani-codes.github.io/ownerless](https://savani-codes.github.io/ownerless/) · Demo video: *coming with the submission*
+> Website: [savani-codes.github.io/ownerless](https://savani-codes.github.io/ownerless/) · Demo video: [youtu.be/PQA5yh0pJDk](https://youtu.be/PQA5yh0pJDk)
 
 ## The problem
 
