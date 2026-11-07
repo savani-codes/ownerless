@@ -27,7 +27,7 @@ Ownerless turns that hour into one chat thread:
 
 | Who | Does |
 | --- | --- |
-| **JARS** (on-call engineer) | Posts one message: `@investigator daily_revenue didn't refresh, what happened?` |
+| **JARS** (on-call engineer) | Posts one message: `daily_revenue didn't refresh last night, what happened? @investigator` |
 | **@investigator** (read-only agent) | Reads the failed run, the error log, the DAG, the warehouse, DataHub and lineage. Posts a report with links, finds that `raw.products` has **no owner**, suggests Data Platform, and hands a numbered fix to `@operator` |
 | **SAV** (Data Platform lead) | Posts one message: "Data Platform owns products, I approve a, b and c" (**key one**) |
 | **@operator** (gated agent) | Runs each step: assign the owner in DataHub, restore the products, rerun the pipeline. Each raises a Switch permission prompt that JARS allows (**key two**), then it checks the result |
@@ -104,7 +104,7 @@ ownerless scenario break        # an upstream cleanup deletes 3 products
 ownerless scenario trigger      # the nightly run fails at validate_orders
 ```
 
-Then in the room: `@investigator daily_revenue didn't refresh, what happened?`
+Then in the room: `daily_revenue didn't refresh last night, what happened? @investigator`
 [scenario/README.md](scenario/README.md) explains each step and what a correct investigation finds.
 `scripts/down.sh` stops the stack (`--wipe` removes its data).
 
